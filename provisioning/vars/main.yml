@@ -1,7 +1,8 @@
 ---
-ruby_install_from_source: true
-ruby_download_url: http://cache.ruby-lang.org/pub/ruby/2.2/ruby-2.2.2.tar.gz
-ruby_version: 2.2.2
+oracle_java_version: 8
+oracle_java_default: no
+oracle_java_cache_valid_time: 3600
+
 pg_version: 9.2
 pg_encoding: 'UTF-8'
 pg_locale: 'en_US.UTF-8'
@@ -9,6 +10,3 @@ pg_admin_user: 'postgres'
 pg_default_auth_method: 'trust'
 pg_cluster: 'main'
 pg_cluster_recreate: false
-oracle_java_version: 8
-oracle_java_default: no
-oracle_java_cache_valid_time: 3600

@@ -7,6 +7,5 @@
     - vars/main.yml
 
   roles:
-    - geerlingguy.ruby
     - zzet.postgresql
     - ansiblebit.oracle-java

@@ -8,3 +8,6 @@
 .gradle
 build/
 !gradle-wrapper.jar
+
+# OSX
+.DS_Store

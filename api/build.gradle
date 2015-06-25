@@ -12,12 +12,10 @@ buildscript {
 }
 
 apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
 apply plugin: 'spring-boot'
 
 jar {
-    baseName = 'gs-spring-boot'
+    baseName = 'library-api'
     version =  '0.1.0'
 }
 
@@ -25,8 +23,8 @@ repositories {
     mavenCentral()
 }
 
-sourceCompatibility = 1.5
-targetCompatibility = 1.5
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 dependencies {
     // tag::jetty[]

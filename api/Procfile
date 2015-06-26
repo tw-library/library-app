@@ -1,1 +1,1 @@
-web: ./build/install/library/bin/library
+web: JAVA_OPTS="-Dserver.port=$PORT" ./build/install/library/bin/library

@@ -1,3 +1,6 @@
 [submodule "api"]
 	path = api
 	url = git@github.com:tw-library/library-api.git
+[submodule "ui"]
+	path = ui
+	url = git@github.com:tw-library/library-ui.git

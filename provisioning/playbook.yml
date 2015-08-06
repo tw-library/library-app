@@ -9,8 +9,23 @@
   roles:
     - ansiblebit.oracle-java
     - zzet.postgresql
-    - hectcastro.tomcat
+    - nodesource.node
+    - geerlingguy.git
 
   tasks:
-    - name: Set Tomcat JAVA_HOME
-      lineinfile: dest=/etc/default/tomcat7 regexp=JAVA_HOME= line=JAVA_HOME={{oracle_java_home}}
+    - name: updating submodules
+      command: git submodule update --init --recursive
+      args:
+        chdir: /vagrant
+
+    - name: installing bower
+      npm: name=bower global=yes
+
+    - name: installing grunt
+      npm: name=grunt global=yes
+      npm: name=grunt-cli global=yes
+
+    - name: installing ui packages
+      command: npm install
+      args:
+        chdir: /vagrant/ui

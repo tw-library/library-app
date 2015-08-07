@@ -6,42 +6,99 @@
   vars_files:
     - vars/main.yml
 
-  roles:
-    - ansiblebit.oracle-java
-    - zzet.postgresql
-    - nodesource.node
-    - geerlingguy.git
-
   tasks:
-    - name: updating submodules
-      command: git submodule update --init --recursive
-      args:
-        chdir: /vagrant
+    - name: Download and Install Node v0.12
+      shell: wget -qO- https://deb.nodesource.com/setup_0.12 | bash -
 
-    - name: setting api submodule head to master
-      command: "{{ item }}"
+    - name: Grabbing the gradle repository
+      apt_repository: repo='ppa:cwchien/gradle' state=present
+
+    - name: Ensure apt cache is up to date
+      apt: update_cache=yes
+
+    - name: Ensure packages are installed
+      apt: name={{item}}
       with_items:
-        - git checkout master
-        - git pull origin master
-      args:
-        chdir: /vagrant/api
+          - vim
+          - git
+          - openjdk-7-jdk
+          - postgresql
+          - postgresql-contrib
+          - python-psycopg2
+          - gradle
+          - build-essential
+          - nodejs
 
-    - name: setting ui submodule head to master
-      command: "{{ item }}"
-      with_items:
-        - git checkout master
-        - git pull origin master
-      args:
-        chdir: /vagrant/ui
+    - name: Install bower globally
+      npm:
+        name: bower
+        global: yes
+        state: present
 
-    - name: installing bower
-      npm: name=bower global=yes
+    - name: Install grunt globally
+      npm:
+        name: grunt
+        global: yes
 
-    - name: installing grunt
-      npm: name=grunt global=yes
-      npm: name=grunt-cli global=yes
+    - name: Install grunt-cli globally
+      npm:
+        name: grunt-cli
+        global: yes
 
-    - name: installing ui packages
+    - name: Install ui packages
       command: npm install
       args:
         chdir: /vagrant/ui
+
+    - name: Replace host file localhost mapping
+      lineinfile:
+        dest: /etc/hosts
+        regexp: '^127\.0\.0\.1'
+        line: '0.0.0.0 localhost'
+
+    - name: Add aliases to system
+      lineinfile:
+        dest: /home/vagrant/.bashrc
+        line: '{{item}}'
+      with_items:
+        - alias lapi='cd {{shared}}/api'
+        - alias lui='cd {{shared}}/ui'
+
+
+- hosts: all
+  sudo: yes
+  sudo_user: postgres
+  gather_facts: no
+
+  vars_files:
+    - vars/main.yml
+
+  tasks:
+    - name: Ensure development database is created
+      postgresql_db: name={{pg_db_name}}
+
+    - name: Ensure test database is created
+      postgresql_db: name={{pg_test_db_name}}
+
+    - name: Ensure user has access to development database
+      postgresql_user: db={{pg_db_name}} name={{pg_admin_user}} password={{pg_db_password}} priv=ALL
+
+    - name: Ensure user has access to test database
+      postgresql_user: db={{pg_test_db_name}} name={{pg_admin_user}} password={{pg_db_password}} priv=ALL
+
+    - name: Ensure user does not have unnecessary privilege
+      postgresql_user: name={{pg_admin_user}} role_attr_flags=NOSUPERUSER,NOCREATEDB
+
+    - name: Change access rights for postgresql
+      lineinfile:
+        dest: /etc/postgresql/9.3/main/pg_hba.conf
+        regexp: '^local\s+all\s+all\s+peer$'
+        line: 'local    all             all                                    trust'
+
+    - name: Change access rights for connection to postgresql
+      lineinfile:
+        dest: /etc/postgresql/9.3/main/pg_hba.conf
+        line: 'host    all             all            10.0.2.15/32               trust'
+
+    - name: Restart postgresql
+      command: service postgresql restart

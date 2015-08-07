@@ -1,12 +1,7 @@
 ---
-oracle_java_version: 8
-oracle_java_default: no
-oracle_java_cache_valid_time: 3600
+shared: /vagrant
 
-pg_version: 9.2
-pg_encoding: 'UTF-8'
-pg_locale: 'en_US.UTF-8'
-pg_admin_user: 'postgres'
-pg_default_auth_method: 'trust'
-pg_cluster: 'main'
-pg_cluster_recreate: false
+pg_db_name: librarydb
+pg_test_db_name: librarydb_test
+pg_admin_user: libraryadmin
+pg_db_password: admin

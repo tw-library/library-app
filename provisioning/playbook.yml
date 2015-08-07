@@ -18,6 +18,22 @@
       args:
         chdir: /vagrant
 
+    - name: setting api submodule head to master
+      command: "{{ item }}"
+      with_items:
+        - git checkout master
+        - git pull origin master
+      args:
+        chdir: /vagrant/api
+
+    - name: setting ui submodule head to master
+      command: "{{ item }}"
+      with_items:
+        - git checkout master
+        - git pull origin master
+      args:
+        chdir: /vagrant/ui
+
     - name: installing bower
       npm: name=bower global=yes
 

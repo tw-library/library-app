@@ -6,6 +6,8 @@ The board is available at: http://waffle.io/tw-library/library-app
 
 Run `./bootstrap.sh`
 
+If you get a 'Permission denied' error, following the steps [here](https://help.github.com/articles/generating-ssh-keys/) to generate ssh keys for github and try again.
+
 
 ## Useful commands
 

@@ -16,7 +16,7 @@
     - name: Ensure apt cache is up to date
       apt: update_cache=yes
 
-    - name: Ensure packages are installed
+    - name: Ensure vim, git, java7, postgresql, gradle and nodejs are installed
       apt: name={{item}}
       with_items:
           - vim

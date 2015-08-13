@@ -18,6 +18,7 @@
 
     - name: Ensure vim, git, java7, postgresql, gradle and nodejs are installed
       apt: name={{item}}
+      sudo: yes
       with_items:
           - vim
           - git

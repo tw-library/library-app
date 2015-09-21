@@ -47,7 +47,7 @@
         global: yes
 
     - name: Install ui packages
-      command: npm install
+      command: npm cache clear && npm install
       args:
         chdir: /vagrant/ui
 

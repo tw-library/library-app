@@ -7,11 +7,11 @@
     - vars/main.yml
 
   tasks:
-    - name: Download and Install Node v0.12
-      shell: wget -qO- https://deb.nodesource.com/setup_0.12 | bash -
+    - name: Grabbing gradle repository
+      apt_repository: repo='ppa:cwchien/gradle'
 
-    - name: Grabbing the gradle repository
-      apt_repository: repo='ppa:cwchien/gradle' state=present
+    - name: Grabbing nodejs repository
+      apt_repository: repo='ppa:chris-lea/node.js'
 
     - name: Ensure apt cache is up to date
       apt: update_cache=yes

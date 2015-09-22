@@ -6,7 +6,7 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provider "virtualbox" do |box|
-    box.memory = 1024
+    box.memory = 2048
     box.cpus = 2
   end
 

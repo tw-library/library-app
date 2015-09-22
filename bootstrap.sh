@@ -1,4 +1,5 @@
 git submodule update --init --recursive
+git submodule update
 
 cd api
 git checkout master

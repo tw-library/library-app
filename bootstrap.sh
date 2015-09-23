@@ -1,15 +1,5 @@
 git submodule update --init --recursive
-git submodule update
-
-cd api
-git checkout master
-git pull
-
-cd ../ui
-git checkout master
-git pull
-
-cd ..
+git submodule foreach git pull origin master
 
 sudo easy_install pip
 sudo pip install paramiko PyYAML Jinja2 httplib2 six

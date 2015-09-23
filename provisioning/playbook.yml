@@ -40,7 +40,7 @@
       shell: npm cache clear --prefix /vagrant/ui/
     
     - name: Install ui packages
-      shell: npm install --prefix /vagrant/ui/ --no-bin-link
+      shell: npm install --prefix /vagrant/ui/
 
     - name: Replace host file localhost mapping
       lineinfile:

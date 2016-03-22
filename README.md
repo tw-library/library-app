@@ -25,10 +25,18 @@ Run `vagrant up` to start the virtual machine.
 
 Run `vagrant ssh` to access the terminal of the virtual machine.
 
-Run `lapi` on virtual machine to navigate to library-api project directory.
+Check all aliases with `alias` command.
 
-Run `lui` on virtual machine to navigate to library-ui project directory.
+## Running for the first time
+
+Run the server `api-cd && ./gradlew run`
+
+Load sample data: `load-sample-data`
+
+Run the front-end: `ui-cd && npm start`
+
+Browse the application at <http://localhost:9000>
 
 ## Issues
 
-The board is available at: http://waffle.io/tw-library/library-app
+The board is available at: https://kamu.mingle.thoughtworks.com/projects/kamu/overview

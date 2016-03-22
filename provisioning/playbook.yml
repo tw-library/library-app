@@ -55,6 +55,8 @@
       with_items:
         - alias lapi='cd {{shared}}/api'
         - alias lui='cd {{shared}}/ui'
+        - alias test-api-integration='lapi && APP_ENV=test ./gradlew integrationTest'
+        - alias test-api-unit='lapi && APP_ENV=test ./gradlew test'
 
 
 - hosts: all

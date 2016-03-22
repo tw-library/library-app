@@ -11,7 +11,7 @@
       apt_repository: repo='ppa:cwchien/gradle'
 
     - name: Grabbing nodejs repository
-      shell: curl --silent --location https://deb.nodesource.com/setup_0.12 | sudo bash -
+      shell: curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
 
     - name: Ensure apt cache is up to date
       apt: update_cache=yes
@@ -41,6 +41,10 @@
     
     - name: Install ui packages
       shell: npm install --prefix /vagrant/ui/
+
+    - name: Install bower dependencies
+      sudo: no
+      shell: cd /vagrant/ui/ && bower install
 
     - name: Replace host file localhost mapping
       lineinfile:

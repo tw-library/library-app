@@ -57,10 +57,11 @@
         dest: /home/vagrant/.bashrc
         line: '{{item}}'
       with_items:
-        - alias lapi='cd {{shared}}/api'
-        - alias lui='cd {{shared}}/ui'
-        - alias test-api-integration='lapi && APP_ENV=test ./gradlew integrationTest'
-        - alias test-api-unit='lapi && APP_ENV=test ./gradlew test'
+        - alias api-cd='cd {{shared}}/api'
+        - alias ui-cd='cd {{shared}}/ui'
+        - alias api-test-integration='lapi && APP_ENV=test ./gradlew integrationTest'
+        - alias api-test-unit='lapi && APP_ENV=test ./gradlew test'
+        - alias load-sample-data='psql -U libraryadmin -d librarydb < /vagrant/db/sample_data.sql'
 
 
 - hosts: all

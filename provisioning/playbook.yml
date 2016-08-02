@@ -101,3 +101,6 @@
 
     - name: Restart postgresql
       command: service postgresql restart
+
+    - name: Create config.js file
+      command: 'echo "use strict";angular.module("config",[]).constant("ENV",{name:"development",apiEndpoint:"http://localhost:8080"}); > /vagrant/ui/app/scripts/config.js'

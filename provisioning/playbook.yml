@@ -11,12 +11,12 @@
       apt_repository: repo='ppa:cwchien/gradle'
 
     - name: Grabbing nodejs repository
-      shell: curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
+      shell: get_url -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
 
     - name: Ensure apt cache is up to date
       apt: update_cache=yes
 
-    - name: Ensure vim, git, java7, postgresql, gradle and nodejs are installed
+    - name: Ensure vim, git, java7, postgresql, gradle, nodejs, npm are installed
       apt: name={{item}}
       sudo: yes
       with_items:
@@ -28,7 +28,8 @@
           - python-psycopg2
           - gradle
           - build-essential
-          - nodejs
+          - nodejs-legacy
+          - npm
 
     - name: Install bower globally
       npm:
@@ -38,9 +39,9 @@
 
     - name: Clear npm cache
       shell: npm cache clear --prefix /vagrant/ui/
-    
+
     - name: Install ui packages
-      shell: npm install --prefix /vagrant/ui/
+      shell: npm install --prefix /vagrant/ui/ --silent
 
     - name: Install bower dependencies
       sudo: no
@@ -62,7 +63,6 @@
         - alias api-test-integration='lapi && APP_ENV=test ./gradlew integrationTest'
         - alias api-test-unit='lapi && APP_ENV=test ./gradlew test'
         - alias load-sample-data='psql -U libraryadmin -d librarydb < /vagrant/db/sample_data.sql'
-
 
 - hosts: all
   sudo: yes
@@ -101,3 +101,6 @@
 
     - name: Restart postgresql
       command: service postgresql restart
+
+    - name: Create config.js file
+      command: 'echo "use strict";angular.module("config",[]).constant("ENV",{name:"development",apiEndpoint:"http://localhost:8080"}); > /vagrant/ui/app/scripts/config.js'
